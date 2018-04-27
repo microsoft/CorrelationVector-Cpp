@@ -1,3 +1,4 @@
+## CMake
 CMakeCache.txt
 CMakeFiles
 CMakeScripts
@@ -7,3 +8,46 @@ cmake_install.cmake
 install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
+
+## Cpp
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Intermediate outputs 
+*.exp
+*.ilk
+*.pdb
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Visual Studio 2015/2017 cache/options directory
+.vs/
