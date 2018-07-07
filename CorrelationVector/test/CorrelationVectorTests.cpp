@@ -219,7 +219,19 @@ TEST_CASE("ThrowWithTooBigExtensionCorrelationVectorValue")
 	REQUIRE(hasErrors);
 }
 
-TEST_CASE("IncrementPastMaxWithNoErrors")
+TEST_CASE("ExtendOverMaxCVLength")
+{
+	Microsoft::CorrelationVector cV = Microsoft::CorrelationVector::extend("tul4NUsfs9Cl7mOf.2147483647.2147483647.2147483647.214748364.23");
+	REQUIRE(cV.getValue() == "tul4NUsfs9Cl7mOf.2147483647.2147483647.2147483647.214748364.23!");
+}
+
+TEST_CASE("ExtendOverMaxCVLengthV2")
+{
+	Microsoft::CorrelationVector cV = Microsoft::CorrelationVector::extend("KZY+dsX2jEaZesgCPjJ2Ng.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.2141");
+	REQUIRE(cV.getValue() == "KZY+dsX2jEaZesgCPjJ2Ng.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.2141!");
+}
+
+TEST_CASE("IncrementPastMaxWithTerminator")
 {
 	Microsoft::CorrelationVector cV = Microsoft::CorrelationVector::extend("tul4NUsfs9Cl7mOf.2147483647.2147483647.2147483647.21474836479");
 	cV.increment();
@@ -230,10 +242,10 @@ TEST_CASE("IncrementPastMaxWithNoErrors")
 		cV.increment();
 	}
 
-	REQUIRE(cV.getValue() == "tul4NUsfs9Cl7mOf.2147483647.2147483647.2147483647.21474836479.9");
+	REQUIRE(cV.getValue() == "tul4NUsfs9Cl7mOf.2147483647.2147483647.2147483647.21474836479.9!");
 }
 
-TEST_CASE("IncrementPastMaxWithNoErrorsV2")
+TEST_CASE("IncrementPastMaxWithTerminatorV2")
 {
 	Microsoft::CorrelationVector cV = Microsoft::CorrelationVector::extend("KZY+dsX2jEaZesgCPjJ2Ng.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.214");
 	cV.increment();
@@ -244,7 +256,41 @@ TEST_CASE("IncrementPastMaxWithNoErrorsV2")
 		cV.increment();
 	}
 
-	REQUIRE(cV.getValue() == "KZY+dsX2jEaZesgCPjJ2Ng.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.214.9");
+	REQUIRE(cV.getValue() == "KZY+dsX2jEaZesgCPjJ2Ng.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.214.9!");
+}
+
+TEST_CASE("ImmutableCVWithTerminator")
+{
+	std::string cvStr = "tul4NUsfs9Cl7mOf.2147483647.2147483647.2147483647.21474836479.0!";
+
+	REQUIRE(cvStr == Microsoft::CorrelationVector::parse(cvStr).increment());
+	REQUIRE(cvStr == Microsoft::CorrelationVector::extend(cvStr).getValue());
+	REQUIRE(cvStr == Microsoft::CorrelationVector::spin(cvStr).getValue());
+}
+
+TEST_CASE("ImmutableCVWithTerminatorV2")
+{
+	std::string cvStr = "KZY+dsX2jEaZesgCPjJ2Ng.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.214.0!";
+
+	REQUIRE(cvStr == Microsoft::CorrelationVector::parse(cvStr).increment());
+	REQUIRE(cvStr == Microsoft::CorrelationVector::extend(cvStr).getValue());
+	REQUIRE(cvStr == Microsoft::CorrelationVector::spin(cvStr).getValue());
+}
+
+TEST_CASE("SpinOverMaxCVLength")
+{
+	std::string baseVector = "tul4NUsfs9Cl7mOf.2147483647.2147483647.2147483647.214748364.23";
+
+	Microsoft::CorrelationVector cv = Microsoft::CorrelationVector::spin(baseVector);
+	REQUIRE((baseVector + Microsoft::CorrelationVector::TERMINATOR) == cv.getValue());
+}
+
+TEST_CASE("SpinOverMaxCVLengthV2")
+{
+	std::string baseVector = "KZY+dsX2jEaZesgCPjJ2Ng.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.2147483647.214";
+
+	Microsoft::CorrelationVector cv = Microsoft::CorrelationVector::spin(baseVector);
+	REQUIRE((baseVector + Microsoft::CorrelationVector::TERMINATOR) == cv.getValue());
 }
 
 TEST_CASE("SpinSortValidation")
