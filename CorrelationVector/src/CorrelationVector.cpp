@@ -186,7 +186,7 @@ namespace Microsoft
 			return false;
 		}
 
-		int cvLen = baseVector.length() + 1 + intLength(extension);
+		size_t cvLen = baseVector.length() + 1 + intLength(extension);
 		return (version == CorrelationVectorVersion::V1 && cvLen > CorrelationVector::MAX_VECTOR_LENGTH)
 			|| (version == CorrelationVectorVersion::V2 && cvLen > CorrelationVector::MAX_VECTOR_LENGTH_V2);
 	}
@@ -271,7 +271,7 @@ namespace Microsoft
 	{
 		if (!correlationVector.empty())
 		{
-			int p = correlationVector.find_last_of('.');
+			size_t p = correlationVector.find_last_of('.');
 			bool isImmutable = CorrelationVector::isImmutable(correlationVector);
 
 			if (p > 0)
@@ -329,7 +329,7 @@ namespace Microsoft
 				return this->getValue();
 			}
 			next = snapshot + 1;
-			int size = baseVector.length() + 1 + (int)std::log10(next) + 1;
+			size_t size = baseVector.length() + 1 + (int)std::log10(next) + 1;
 			if (CorrelationVector::isOversized(this->baseVector, next, this->correlationVectorVersion))
 			{
 				this->isCvImmutable = true;
