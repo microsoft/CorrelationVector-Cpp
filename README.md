@@ -1,3 +1,7 @@
+# Correlation Vector-Cpp
+
+CorrelationVector-Cpp provides the C++ implementation of the CorrelationVector protocol for tracing and correlation of events through a distributed system.
+
 # Correlation Vector
 
 ## Background
@@ -6,8 +10,6 @@
 The standard is widely used internally at Microsoft for first party applications and services and supported across multiple logging libraries and platforms (Services, Clients - Native, Managed, Js, iOS, Android etc). The standard powers a variety of different data processing needs ranging from distributed tracing & debugging to system and business intelligence, in various business organizations.
 
 For more on the correlation vector specification and the scenarios it supports, please refer to the [specification](https://github.com/Microsoft/CorrelationVector) repo.
-
-This repo provides reference implementation for C++ developers to incorporate the cV for their distributed debugging and correlated analytics scenarios.
 
 # Contributing
 
