@@ -1,45 +1,34 @@
-﻿# CMakeList.txt : CMake project for Microsoft.CorrelationVector, include source and define
-# project specific logic here.
-#
-cmake_minimum_required (VERSION 3.7)
+﻿
+cmake_minimum_required(VERSION 3.7)
+project(correlation_vector CXX)
 
-set(LIBUUID_PATH "/usr/include/uuid/uuid.h")
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
+set(CORRELATION_VECTOR_VERSION_MAJOR 1)
+set(CORRELATION_VECTOR_VERSION_MINOR 0)
+set(CORRELATION_VECTOR_VERSION_REVISION 1)
 
-#Bring the headers into the project
-include_directories(include)
- 
-#However, the file(GLOB...) allows for wildcard additions:
-file(GLOB SOURCES "src/*.cpp")
+# Set Options and Defaults
+set(CORRELATION_VECTOR_EXPORT_DIR correlation_vector CACHE STRING "Directory to install CMake config files.")
+set(CORRELATION_VECTOR_INSTALL_HEADERS ON CACHE BOOL "Install header files.")
+set(CORRELATION_VECTOR_INSTALL ON CACHE BOOL "Add install commands.")
 
-add_library (MicrosoftCorrelationVector SHARED ${SOURCES})
+include(GNUInstallDirs)
 
-if(MSVC)
-	set(WARNINGS "/WX" "/W4")
-elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    set(WARNINGS "-Werror" "-Wall")
-endif()
+# Reconfigure final output directory
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 
 if(WIN32)
-    target_compile_definitions(MicrosoftCorrelationVector PRIVATE GUID_WINDOWS)
-else()
-    if (NOT EXISTS LIBUUID_PATH)
-        message(FATAL_ERROR "You need to run 'sudo apt-get install uuid-dev' to install uuid")
-    endif()
-    target_compile_definitions(MicrosoftCorrelationVector PRIVATE GUID_LIBUUID)
+    add_definitions(-DUNICODE -D_UNICODE -DWIN32)
 endif()
 
-# Prepare "Catch" library for other executables
-set(CATCH_INCLUDE_DIR "libs/catch")
-add_library(Catch INTERFACE)
-target_include_directories(Catch INTERFACE ${CATCH_INCLUDE_DIR})
+# These settings can be used by the test targets
+set(CorrelationVector_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include)
+set(CorrelationVector_LIBRARY correlation_vector)
+set(CorrelationVector_LIBRARIES correlation_vector)
 
-# Make test executable
-file(GLOB TEST_SOURCES "test/*.cpp")
-add_executable(tests ${TEST_SOURCES})
-target_link_libraries(tests Catch MicrosoftCorrelationVector)
+add_subdirectory(src)
 
-include("libs/catch/ParseAndAddCatchTests.cmake")
-ParseAndAddCatchTests(tests)
+if (BUILD_TESTS)
+    add_subdirectory(tests)
+endif()

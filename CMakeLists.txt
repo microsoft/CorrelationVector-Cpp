@@ -3,10 +3,9 @@
 #
 cmake_minimum_required (VERSION 3.7)
 
-project("Microsoft.CorrelationVector")
+project(correlation_vector-root NONE)
 
-# Enable testing
+include (CTest)
 enable_testing()
 
-# Include sub-projects.
-add_subdirectory("CorrelationVector")
+add_subdirectory(CorrelationVector)
