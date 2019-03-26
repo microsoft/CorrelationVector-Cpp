@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-namespace telemetry
+namespace microsoft
 {
 namespace utilities
 {
@@ -45,4 +45,4 @@ inline bool contains_whitespace(const std::string& s)
     return s.find_first_of("\t\n ") != std::string::npos;
 }
 } // namespace utilities
-} // namespace telemetry
+} // namespace microsoft

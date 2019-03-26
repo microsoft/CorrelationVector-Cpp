@@ -5,8 +5,7 @@ target_include_directories(${TARGETNAME}
     PUBLIC
         $<INSTALL_INTERFACE:include>
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-    PRIVATE
-        ../priv_include)
+)
 
 if(WIN32)
     target_compile_definitions(${TARGETNAME} PUBLIC GUID_WINDOWS)
@@ -54,7 +53,7 @@ if(CORRELATION_VECTOR_INSTALL)
     install(
         EXPORT correlation_vector-targets
         FILE correlation_vector-targets.cmake
-        NAMESPACE telemetry::
+        NAMESPACE microsoft::
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/${CORRELATION_VECTOR_EXPORT_DIR}
     )
 endif()

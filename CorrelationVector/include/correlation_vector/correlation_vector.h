@@ -6,11 +6,11 @@
 #pragma once
 #include "correlation_vector/guid.h"
 #include "correlation_vector/spin_parameters.h"
-#include <cmath>
 #include <atomic>
+#include <cmath>
 #include <string>
 
-namespace telemetry
+namespace microsoft
 {
 enum class correlation_vector_version
 {
@@ -86,7 +86,13 @@ private:
 
 public:
     /**
-    This is the delimiter to indicate that a CV is terminated.
+     * This is the header that should be used between services to pass the
+     * Correlation Vector.
+     */
+    static constexpr const char HEADER_NAME[] = "MS-CV";
+
+    /**
+    This is the delimiter to indicate that a Correlation Vector is terminated.
     */
     static constexpr const char TERMINATOR = '!';
 
@@ -255,4 +261,4 @@ public:
                m_extension != other.m_extension;
     }
 };
-} // namespace telemetry
+} // namespace microsoft

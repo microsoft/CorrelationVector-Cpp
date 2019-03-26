@@ -13,7 +13,7 @@
 #include <vector>
 #include <limits> // std::numeric_limits
 
-namespace telemetry
+namespace microsoft
 {
 /* static */
 std::string correlation_vector::_unique_value(
@@ -272,4 +272,4 @@ std::string correlation_vector::increment()
 
     return m_base_vector + '.' + std::to_string(next);
 }
-} // namespace telemetry
+} // namespace microsoft

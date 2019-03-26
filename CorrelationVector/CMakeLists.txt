@@ -4,7 +4,7 @@ project(correlation_vector CXX)
 
 set(CORRELATION_VECTOR_VERSION_MAJOR 1)
 set(CORRELATION_VECTOR_VERSION_MINOR 0)
-set(CORRELATION_VECTOR_VERSION_REVISION 1)
+set(CORRELATION_VECTOR_VERSION_REVISION 0)
 
 # Set Options and Defaults
 set(CORRELATION_VECTOR_EXPORT_DIR correlation_vector CACHE STRING "Directory to install CMake config files.")

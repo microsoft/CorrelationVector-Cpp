@@ -7,7 +7,7 @@
 #include "utilities.h"
 #include <cmath>
 
-namespace telemetry
+namespace microsoft
 {
 namespace impl
 {
@@ -28,7 +28,7 @@ constexpr std::array<unsigned char, 16> convert_to_array(const uuid_t& g)
 {
     return impl::convert_to_array(reinterpret_cast<const unsigned char*>(g));
 }
-#endif 
+#endif
 
 } // namespace impl
 guid guid::create()
@@ -102,4 +102,4 @@ std::string guid::to_base64_string(int len) const
 
     return s;
 }
-} // telemetry
+} // microsoft

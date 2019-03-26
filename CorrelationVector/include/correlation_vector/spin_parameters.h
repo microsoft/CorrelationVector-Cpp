@@ -5,7 +5,7 @@
 //---------------------------------------------------------------------
 #pragma once
 
-namespace telemetry
+namespace microsoft
 {
 enum class spin_counter_interval
 {
@@ -149,4 +149,4 @@ public:
                static_cast<int>(m_entropy) * 8;
     }
 };
-} // namespace telemetry
+} // namespace microsoft

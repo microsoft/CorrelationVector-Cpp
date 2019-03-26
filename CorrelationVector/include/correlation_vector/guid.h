@@ -8,7 +8,7 @@
 #include <array>
 #include <string>
 
-namespace telemetry
+namespace microsoft
 {
 #if defined(GUID_WINDOWS)
 #include "Objbase.h"
@@ -51,4 +51,4 @@ public:
     std::string to_string() const;
     std::string to_base64_string(int len = 16) const;
 };
-} // telemetry
+} // microsoft

@@ -3,7 +3,7 @@ add_executable(${TARGETNAME} CorrelationVectorTests.cpp)
 
 find_package(Catch2 REQUIRED)
 target_link_libraries(${TARGETNAME} PRIVATE Catch2::Catch2 correlation_vector)
-target_include_directories(${TARGETNAME} PRIVATE ../priv_include)
+target_include_directories(${TARGETNAME} PRIVATE ../src)
 
 if (UNIX)
     find_package(Threads REQUIRED)
