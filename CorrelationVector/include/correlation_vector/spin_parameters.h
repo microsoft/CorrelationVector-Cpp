@@ -81,10 +81,10 @@ enum class spin_entropy
 class spin_parameters
 {
 private:
-    spin_entropy m_entropy{spin_entropy::two};
     spin_counter_interval m_interval{spin_counter_interval::coarse};
     spin_counter_periodicity m_periodicity{
         spin_counter_periodicity::short_length};
+    spin_entropy m_entropy{spin_entropy::two};
 
 public:
     /**
@@ -95,7 +95,7 @@ public:
     spin_parameters(spin_counter_interval interval,
                     spin_counter_periodicity periodicity,
                     spin_entropy entropy)
-        : m_interval{interval}, m_entropy{entropy}, m_periodicity{periodicity}
+        : m_interval{interval}, m_periodicity{periodicity}, m_entropy{entropy}
     {
     }
 
@@ -107,8 +107,8 @@ public:
 
     /**
     Sets the spin_entropy.
-    @param entropy The spin_entropy enum representing the number of bytes to use for
-    entropy.
+    @param entropy The spin_entropy enum representing the number of bytes to use
+    for entropy.
     */
     void entropy(spin_entropy entropy) { m_entropy = entropy; }
 

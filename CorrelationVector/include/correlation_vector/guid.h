@@ -8,25 +8,38 @@
 #include <array>
 #include <string>
 
-namespace microsoft
-{
 #if defined(GUID_WINDOWS)
 #include "Objbase.h"
-using guid_t = GUID;
 #elif defined(GUID_LIBUUID)
 #include <uuid/uuid.h>
-using guid_t = uuid_t;
+
+#elif defined(GUID_BOOST)
+#include <boost/uuid/uuid.hpp>
 #else
 #error "No guid type avaialable."
 #endif
 
+namespace microsoft
+{
+#if defined(GUID_WINDOWS)
+using guid_t = GUID;
+#elif defined(GUID_LIBUUID)
+using guid_t = uuid_t;
+#elif defined(GUID_BOOST)
+using guid_t = boost::uuids::uuid;
+#endif
 class guid
 {
 private:
     guid() = default;
 
-    guid(const std::array<unsigned char, 16>& bytes) : m_bytes{bytes} {}
-    guid(std::array<unsigned char, 16>&& bytes) : m_bytes{std::move(bytes)} {}
+    constexpr guid(const std::array<unsigned char, 16>& bytes) : m_bytes{bytes}
+    {
+    }
+    constexpr guid(std::array<unsigned char, 16>&& bytes)
+        : m_bytes{std::move(bytes)}
+    {
+    }
 
     void _clear()
     {
@@ -51,4 +64,4 @@ public:
     std::string to_string() const;
     std::string to_base64_string(int len = 16) const;
 };
-} // microsoft
+} // namespace microsoft

@@ -79,9 +79,9 @@ private:
     {
     }
 
-    correlation_vector_version m_version{correlation_vector_version::v1};
     std::string m_base_vector;
     std::atomic<int> m_extension{0};
+    correlation_vector_version m_version{correlation_vector_version::v1};
     bool m_is_immutable{false};
 
 public:
@@ -100,7 +100,10 @@ public:
     Initializes a new instance of the Correlation Vector. This should only
     be called when no existing Correlation Vector was found.
     */
-    correlation_vector() : m_base_vector{_unique_value(m_version)} {}
+    correlation_vector()
+        : m_base_vector{_unique_value(correlation_vector_version::v1)}
+    {
+    }
 
     /**
     Initializes a new instance of the Correlation Vector of the V2
@@ -152,6 +155,7 @@ public:
         m_extension.store(other.m_extension.load());
         m_version = other.m_version;
         m_is_immutable = other.m_is_immutable;
+        return *this;
     }
 
     correlation_vector& operator=(correlation_vector&& other)
@@ -160,6 +164,7 @@ public:
         m_extension.store(other.m_extension.load());
         m_version = other.m_version;
         m_is_immutable = other.m_is_immutable;
+        return *this;
     }
 
     /**

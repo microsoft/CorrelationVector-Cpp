@@ -4,14 +4,15 @@
 // </copyright>
 //---------------------------------------------------------------------
 #include "correlation_vector/correlation_vector.h"
+
 #include "correlation_vector/guid.h"
 #include "correlation_vector/spin_parameters.h"
 #include "utilities.h"
 #include <chrono>
 #include <ctime>
+#include <limits> // std::numeric_limits
 #include <string>
 #include <vector>
-#include <limits> // std::numeric_limits
 
 namespace microsoft
 {
@@ -226,8 +227,9 @@ correlation_vector correlation_vector::parse(
                         : std::stoi(lastStage);
 
         int extLen = _int_length(extension);
-        bool isValidExt = isImmutable ? (extLen == lastStage.length() - 1)
-                                      : (extLen == lastStage.length());
+        bool isValidExt =
+            isImmutable ? (extLen == static_cast<int>(lastStage.length()) - 1)
+                        : (extLen == static_cast<int>(lastStage.length()));
 
         if (isValidExt && extension >= 0)
         {

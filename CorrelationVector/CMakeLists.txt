@@ -2,14 +2,18 @@
 cmake_minimum_required(VERSION 3.7)
 project(correlation_vector CXX)
 
+# Tell CMake to look in cmake for our custom CMake module files.
+set (CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
+include (CVOptions)
+include (CVHelpers)
+
+add_global_definitions ()
+set_global_compile_flags ()
+
 set(CORRELATION_VECTOR_VERSION_MAJOR 1)
 set(CORRELATION_VECTOR_VERSION_MINOR 0)
 set(CORRELATION_VECTOR_VERSION_REVISION 0)
-
-# Set Options and Defaults
-set(CORRELATION_VECTOR_EXPORT_DIR correlation_vector CACHE STRING "Directory to install CMake config files.")
-set(CORRELATION_VECTOR_INSTALL_HEADERS ON CACHE BOOL "Install header files.")
-set(CORRELATION_VECTOR_INSTALL ON CACHE BOOL "Add install commands.")
 
 include(GNUInstallDirs)
 
@@ -17,10 +21,6 @@ include(GNUInstallDirs)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
-
-if(WIN32)
-    add_definitions(-DUNICODE -D_UNICODE -DWIN32)
-endif()
 
 # These settings can be used by the test targets
 set(CorrelationVector_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include)
