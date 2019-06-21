@@ -12,14 +12,14 @@ enum class spin_counter_interval
     /**
         The coarse interval drops the 24 least significant bits in
        time_since_epoch resulting in a counter that increments every 1.67
-       seconds.
+       seconds (on system with 10 million ticks = 1 second).
     */
     coarse = 24,
 
     /**
         The fine interval drops the 16 least significant bits in
        time_since_epoch resulting in a counter that increments every 6.5
-       milliseconds.
+       milliseconds (on system with 10 million ticks = 1 second).
     */
     fine = 16
 };
