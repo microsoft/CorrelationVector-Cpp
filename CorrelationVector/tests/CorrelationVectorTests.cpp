@@ -297,7 +297,7 @@ TEST_CASE("Spin_SortValidation")
         // MacOS SYSTEM_CLOCK and std::chrono::system_clock have microsecond precision.
         // Both Windows and Linux have sub-microsecond precision.
         // This means we need to wait a bit longer (over 65 milliseconds) on MacOS
-        // for the spin operator to to change the value of the cv.
+        // for the spin operator to change the value of the cV.
 #ifdef __APPLE__
         // Wait for 70ms
         std::this_thread::sleep_for(std::chrono::milliseconds(70));
