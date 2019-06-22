@@ -38,13 +38,13 @@ constexpr std::array<unsigned char, 16> convert_to_array(const unsigned char* g)
 }
 
 #ifdef GUID_WINDOWS
-constexpr std::array<unsigned char, 16> convert_to_array(const GUID& g)
+std::array<unsigned char, 16> convert_to_array(const GUID& g)
 {
     return impl::convert_to_array(reinterpret_cast<const unsigned char*>(&g));
 }
 #endif
 #ifdef GUID_LIBUUID
-constexpr std::array<unsigned char, 16> convert_to_array(const uuid_t& g)
+std::array<unsigned char, 16> convert_to_array(const uuid_t& g)
 {
     return impl::convert_to_array(reinterpret_cast<const unsigned char*>(g));
 }
